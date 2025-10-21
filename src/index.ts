@@ -49,6 +49,25 @@ app.get("/metadata", async function(req, res) {
         address: response2.rows
     })
 })
+app.get('/better-data', async function(req, res) {
+    const id = req.query.id;
+    try {
+
+    
+    const query =  `SELECT users.id, users.username, users.email, address.city, address .country, address.street, address.pincode 
+FROM users JOIN address on users.id = address.user_id
+WHERE users.id=$1;`
+const response = await pgClient.query(query, [id]);
+res.json({
+    response : response.rows,
+})
+    } catch(e) {
+        console.log(e);
+        res.status(400).json({
+            msg : "invalid entry"
+        })
+        }
+})
         
 
 app.listen(3000)
