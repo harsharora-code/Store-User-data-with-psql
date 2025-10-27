@@ -54,7 +54,7 @@ app.get('/better-data', async function(req, res) {
     try {
 
     
-    const query =  `SELECT users.id, users.username, users.email, address.city, address .country, address.street, address.pincode 
+const query =  `SELECT users.id, users.username, users.email, address.city, address .country, address.street, address.pincode 
 FROM users JOIN address on users.id = address.user_id
 WHERE users.id=$1;`
 const response = await pgClient.query(query, [id]);
